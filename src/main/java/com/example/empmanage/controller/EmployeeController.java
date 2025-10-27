@@ -1,13 +1,16 @@
 package com.example.empmanage.controller;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.empmanage.domain.Employee;
+import com.example.empmanage.domain.Department;
+import com.example.empmanage.service.DepartmentService;
 import com.example.empmanage.service.EmployeeService;
 
 @Controller
@@ -15,11 +18,34 @@ import com.example.empmanage.service.EmployeeService;
 public class EmployeeController {
 
     @Autowired
-    private EmployeeService service;
+    private EmployeeService employeeService;
+
+    @Autowired
+    private DepartmentService departmentService;
 
     @RequestMapping("/list")
     public String list(Model model) {
-        model.addAttribute("employeeList", service.findAll());
+        model.addAttribute("employeeList", employeeService.findAll());
         return "employee/list";
+    }
+
+    @RequestMapping("/detail")
+    public String detail(Integer id, Model model) {
+        model.addAttribute("employee", employeeService.load(id));
+        return "employee/detail";
+    }
+
+    @RequestMapping("/toAddForm")
+    public String toAddForm(Model model) {
+        model.addAttribute("depMap", convertList2Map(departmentService.findAll()));
+        return "employee/addForm";
+    }
+
+    private Map<Integer, String> convertList2Map(List<Department> depList) {
+        Map<Integer, String> departmentMap = new LinkedHashMap<>();
+        for (Department dep : depList) {
+            departmentMap.put(dep.getId(), dep.getName());
+        }
+        return departmentMap;
     }
 }
