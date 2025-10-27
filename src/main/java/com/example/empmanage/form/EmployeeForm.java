@@ -13,7 +13,7 @@ public class EmployeeForm {
     private Integer age;
     @NotEmpty(message="性別を選択してください")
     private String gender;
-    @NotEmpty(message="部署を選択してください")
+    @NotNull(message="部署を選択してください")
     private Integer departmentId;
 
     public Integer getId() {

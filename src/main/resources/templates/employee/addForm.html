@@ -9,33 +9,47 @@
             border: 1px solid black; /* 罫線を設定 */
             border-collapse: collapse; /* 罫線が二重にならないようにする */
             padding: 8px; /* セル内の余白 */
-        }        
+        }
+        .error {
+            color: red;
+        }
     </style>
 </head>
 <body>
 <h2>従業員登録</h2>
-<form th:action="@{/employee/add}" method="post">
+<form th:action="@{/employee/add}" method="post" th:object="${employeeForm}">
 <table>
     <tr>
         <th>名前</th>
-        <td><input type="text" name="name"></td>
+        <td>
+            <div th:errors="*{name}" class="error">xx</div>
+            <input type="text" th:field="*{name}">
+        </td>
     </tr>
     <tr>
         <th>年齢</th>
-        <td><input type="text" name="age"></td>
+        <td>
+            <div th:errors="*{age}" class="error">xx</div>
+            <input type="text" th:field="*{age}">
+        </td>
     </tr>
     <tr>
         <th>性別</th>
         <td>
-            <input type="radio" name="gender" value="男">男
-            <input type="radio" name="gender" value="女">女
+            <div th:errors="*{gender}" class="error">xx</div>
+            <input type="radio" th:field="*{gender}" value="男">男
+            <input type="radio" th:field="*{gender}" value="女">女
         </td>
     </tr>
     <tr>
         <th>部署</th>
         <td>
+            <div th:errors="*{departmentId}" class="error">xx</div>
             <select name="departmentId">
-                <option th:each="dep : ${depMap}" th:value="${dep.key}" th:text="${dep.value}">
+                <option th:each="dep : ${depMap}"
+                    th:field="*{departmentId}"
+                    th:value="${dep.key}" 
+                    th:text="${dep.value}">
                 </option>
             </select>
         </td>
