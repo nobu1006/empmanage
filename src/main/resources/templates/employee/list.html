@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>従業員管理</title>
+    <style>
+        table, th, td {
+            border: 1px solid black; /* 罫線を設定 */
+            border-collapse: collapse; /* 罫線が二重にならないようにする */
+            padding: 8px; /* セル内の余白 */
+        }        
+    </style>
+</head>
+<body>
+<h2>従業員一覧</h2>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>名前</th>
+        <th>年齢</th>
+        <th>性別</th>
+        <th>部署ID</th>
+    </tr>
+    <tr th:each="emp : ${employeeList}">
+        <td th:text="${emp.id}"></td>
+        <td th:text="${emp.name}"></td>
+        <td th:text="${emp.age}"></td>
+        <td th:text="${emp.gender}"></td>
+        <td th:text="${emp.departmentId}"></td>
+    </tr>
+</table>
+</body>
+</html>
